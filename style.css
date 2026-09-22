@@ -1,0 +1,218 @@
+/* =========================================================
+   Chat Local - Mensagio Tecnologia
+   Arquivo de estilos (CSS)
+   ========================================================= */
+
+/* Reset básico - remove margens e paddings padrão do navegador */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo geral da página */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e2e8f0;
+  padding: 16px;
+}
+
+/* Container principal (centraliza o conteúdo) */
+.container {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* Cabeçalho */
+header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+/* Card (caixa principal) */
+.card {
+  background: #1e293b;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid #334155;
+}
+
+/* Classe utilitária para esconder elementos */
+.hidden {
+  display: none !important;
+}
+
+/* ========== Tela de Login ========== */
+
+#login-screen h2 {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+#username-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#username-input:focus {
+  border-color: #38bdf8;
+}
+
+/* Botões */
+button {
+  width: 100%;
+  padding: 12px;
+  background: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #0284c7;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Botão pequeno (Sair) */
+.btn-small {
+  width: auto;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  background: #475569;
+}
+
+.btn-small:hover {
+  background: #64748b;
+}
+
+/* ========== Tela do Chat ========== */
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #334155;
+}
+
+/* Área onde as mensagens aparecem */
+.messages {
+  height: 360px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-right: 4px;
+}
+
+/* Estilo de cada mensagem */
+.message {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+/* Mensagem enviada por você (direita, azul) */
+.message.own {
+  align-self: flex-end;
+  background: #0ea5e9;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+/* Mensagem de "outra pessoa" (esquerda, cinza) */
+.message.other {
+  align-self: flex-start;
+  background: #334155;
+  border-bottom-left-radius: 4px;
+}
+
+/* Nome + horário em cima da mensagem */
+.message .meta {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+.message.own .meta {
+  text-align: right;
+}
+
+/* Área de digitação + botão enviar */
+.input-area {
+  display: flex;
+  gap: 8px;
+}
+
+#message-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 1rem;
+  outline: none;
+}
+
+#message-input:focus {
+  border-color: #38bdf8;
+}
+
+#send-btn {
+  width: auto;
+  padding: 12px 20px;
+}
+
+/* Scrollbar personalizada (fica mais bonita) */
+.messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 3px;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Local • Mensagio Tecnologia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Cabeçalho -->
+    <header>
+      <h1>Chat Local</h1>
+      <p class="subtitle">Mensagio Tecnologia • Minicurso</p>
+    </header>
+
+    <!-- ==================== TELA DE ENTRADA ==================== -->
+    <!-- Esta tela aparece primeiro. O aluno digita o nome e entra no chat. -->
+    <div id="login-screen" class="card">
+      <h2>Como você quer ser chamado?</h2>
+      <input
+        type="text"
+        id="username-input"
+        placeholder="Digite seu nome..."
+        maxlength="20"
+        autocomplete="off"
+      >
+      <button id="enter-btn">Entrar no chat</button>
+    </div>
+
+    <!-- ==================== TELA DO CHAT ==================== -->
+    <!-- Esta tela fica escondida no início (classe "hidden").
+         Só aparece depois que o aluno digita o nome. -->
+    <div id="chat-screen" class="card hidden">
+
+      <div class="chat-header">
+        <span>Olá, <strong id="display-name"></strong>!</span>
+        <button id="logout-btn" class="btn-small">Sair</button>
+      </div>
+
+      <!-- Aqui as mensagens vão aparecer -->
+      <div id="messages" class="messages"></div>
+
+      <!-- Área de digitação -->
+      <div class="input-area">
+        <input
+          type="text"
+          id="message-input"
+          placeholder="Digite sua mensagem..."
+          autocomplete="off"
+        >
+        <button id="send-btn">Enviar</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Arquivo JavaScript que controla toda a lógica -->
+  <script src="script.js"></script>
+</body>
+</html>
