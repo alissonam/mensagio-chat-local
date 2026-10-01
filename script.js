@@ -26,6 +26,10 @@ const listaMensagens = document.getElementById('lista-mensagens');
 const inputMensagem = document.getElementById('input-mensagem');
 const btnEnviar = document.getElementById('btn-enviar');
 
+// Novos elementos adicionados
+const btnEmoji = document.getElementById('btn-emoji');
+const painelEmojis = document.getElementById('painel-emojis');
+
 // ----- 2. Dados do chat -----
 let usuarioAtual = null;
 let mensagens = [];
@@ -50,14 +54,27 @@ function protegerTexto(texto) {
 // Adiciona uma mensagem na lista e atualiza a tela
 function adicionarMensagem(texto, ehMinha) {
   const msg = {
+    id: Date.now(),
     usuario: usuarioAtual,
     texto: texto,
     hora: new Date(),
-    minha: ehMinha
+    minha: ehMinha,
+    curtidas: 0,
+    curtido: false
   };
 
   mensagens.push(msg);
   mostrarMensagens();
+}
+
+// Alterna a curtida em uma mensagem específica
+function alternarCurtida(id) {
+  const msg = mensagens.find(m => m.id === id);
+  if (msg) {
+    msg.curtido = !msg.curtido;
+    msg.curtidas += msg.curtido ? 1 : -1;
+    mostrarMensagens();
+  }
 }
 
 // Desenha todas as mensagens na tela
@@ -70,9 +87,13 @@ function mostrarMensagens() {
     // Define se a mensagem é "minha" ou "outra"
     div.className = 'mensagem ' + (msg.minha ? 'minha' : 'outra');
 
+    const iconeCurtida = msg.curtido ? '❤️' : '🤍';
+    const textoCurtida = msg.curtidas > 0 ? ` ${iconeCurtida} ${msg.curtidas}` : ` ${iconeCurtida}`;
+
     div.innerHTML =
       '<div class="info">' + msg.usuario + ' • ' + formatarHora(msg.hora) + '</div>' +
-      '<div>' + protegerTexto(msg.texto) + '</div>';
+      '<div>' + protegerTexto(msg.texto) + '</div>' + msg.id +
+      '<button class="btn-curtir" onclick="alternarCurtida(' + msg.id + ')">' + textoCurtida + '</button>';
 
     listaMensagens.appendChild(div);
   });
@@ -123,6 +144,7 @@ function enviarMensagem() {
   adicionarMensagem(texto, true);   // true = mensagem minha
 
   inputMensagem.value = '';
+  painelEmojis.classList.add('escondido');
   inputMensagem.focus();
 }
 
@@ -136,12 +158,26 @@ inputMensagem.addEventListener('keypress', function (e) {
   }
 });
 
+// Mostrar/Ocultar painel de emojis
+btnEmoji.addEventListener('click', function () {
+  painelEmojis.classList.toggle('escondido');
+});
+
+// Inserir emoji no campo ao clicar
+painelEmojis.addEventListener('click', function (e) {
+  if (e.target.tagName === 'SPAN') {
+    inputMensagem.value += e.target.textContent;
+    inputMensagem.focus();
+  }
+});
+
 // Clicou em "Sair"
 btnSair.addEventListener('click', function () {
   usuarioAtual = null;
   mensagens = [];
   listaMensagens.innerHTML = '';
   inputNome.value = '';
+  painelEmojis.classList.add('escondido');
 
   telaChat.classList.add('escondido');
   telaLogin.classList.remove('escondido');

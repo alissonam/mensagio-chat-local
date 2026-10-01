@@ -167,10 +167,65 @@ button:hover {
   text-align: right;
 }
 
+/* Botão de curtir na mensagem */
+.btn-curtir {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block;
+  opacity: 0.8;
+  color: inherit;
+  width: auto;
+  padding: 0;
+  text-align: right;
+}
+
+.mensagem.outra .btn-curtir {
+  text-align: left;
+}
+
+.btn-curtir:hover {
+  opacity: 1;
+  background: none;
+}
+
+/* Painel de Emojis */
+.painel-emojis {
+  display: flex;
+  justify-content: space-around;
+  background: #0f172a;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #475569;
+  margin-bottom: 10px;
+}
+
+.painel-emojis span {
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.1s;
+}
+
+.painel-emojis span:hover {
+  transform: scale(1.3);
+}
+
 /* Campo de digitação + botão enviar */
 .area-envio {
   display: flex;
   gap: 8px;
+}
+
+.btn-emoji {
+  width: auto;
+  padding: 10px 12px;
+  background: #334155;
+}
+
+.btn-emoji:hover {
+  background: #475569;
 }
 
 #input-mensagem {
