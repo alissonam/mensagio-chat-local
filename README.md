@@ -1,44 +1,43 @@
 # Chat Local
 
-Projeto simples de chat feito **apenas com HTML, CSS e JavaScript**.
+Chat simples feito só com **HTML + CSS + JavaScript**.
 
-Criado para o minicurso da **Mensagio Tecnologia**.
-
----
-
-## O que este projeto faz
-
-- Tela para digitar o nome
-- Chat com mensagens em tempo real **na sua máquina**
-- Horário em cada mensagem
-- Visual moderno e responsivo
+Projeto do minicurso da **Mensagio Tecnologia**.
 
 ---
 
-## Como abrir o projeto
+## O que ele faz
 
-### Opção 1 - Mais simples
-
-1. Baixe ou clone este repositório
-2. Clique duas vezes no arquivo `index.html`
-3. O chat abrirá no seu navegador
-
-### Opção 2 - Recomendada (Live Server)
-
-1. Abra a pasta no **Visual Studio Code**
-2. Instale a extensão **Live Server** (se ainda não tiver)
-3. Clique com o botão direito em `index.html` → **Open with Live Server**
+- Você digita um nome e entra no chat
+- Envia mensagens
+- Vê o horário de cada mensagem
+- Visual moderno
 
 ---
 
-## Estrutura dos arquivos
+## Como abrir
+
+**Forma mais simples:**
+
+1. Clique duas vezes no arquivo `index.html`
+2. O chat abre no navegador
+
+**Com VS Code (recomendado):**
+
+1. Abra a pasta no VS Code
+2. Use a extensão **Live Server**
+3. Clique com o botão direito em `index.html` → Open with Live Server
+
+---
+
+## Arquivos do projeto
 
 ```
 mensagio-chat-local/
-├── index.html      → Estrutura da página (HTML)
-├── style.css       → Visual e cores (CSS)
-├── script.js       → Lógica do chat (JavaScript)
-└── README.md       → Este arquivo
+├── index.html   → estrutura da página
+├── style.css    → cores e visual
+├── script.js    → lógica do chat
+└── README.md    → este arquivo
 ```
 
 ---
@@ -47,26 +46,21 @@ mensagio-chat-local/
 
 Este chat funciona **somente na sua máquina**.
 
-- As mensagens ficam apenas na memória do navegador
-- Se você atualizar a página (F5), as mensagens desaparecem
-- Não é possível conversar com outras pessoas em outros computadores
+- As mensagens somem se você atualizar a página
+- Não dá para conversar com outras pessoas em outros computadores
 
-Isso acontece porque não existe um **servidor** no meio.
+Isso acontece porque não existe um **servidor**.
 
-No minicurso você vai conhecer a versão real (`mensagio-chat-live`), onde várias pessoas conseguem conversar ao mesmo tempo.
+No minicurso você vai conhecer o **Chat ao Vivo**, onde várias pessoas conversam ao mesmo tempo.
 
 ---
 
-## Tecnologias usadas
+## Tecnologias
 
 - HTML5
 - CSS3
-- JavaScript (Vanilla - sem frameworks)
-
-Nenhuma biblioteca externa foi utilizada.
+- JavaScript (sem bibliotecas)
 
 ---
 
-## Autor
-
-Projeto desenvolvido para fins educacionais pela **Mensagio Tecnologia**.
+Mensagio Tecnologia

@@ -3,62 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat Local • Mensagio Tecnologia</title>
+  <title>Chat Local • Mensagio</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <div class="container">
-
-    <!-- Cabeçalho -->
+    <!-- Título do projeto -->
     <header>
       <h1>Chat Local</h1>
-      <p class="subtitle">Mensagio Tecnologia • Minicurso</p>
+      <p class="subtitle">Mensagio Tecnologia</p>
     </header>
-
-    <!-- ==================== TELA DE ENTRADA ==================== -->
-    <!-- Esta tela aparece primeiro. O aluno digita o nome e entra no chat. -->
-    <div id="login-screen" class="card">
+    <!-- ========== TELA 1: Digitar o nome ========== -->
+    <div id="tela-login" class="card">
       <h2>Como você quer ser chamado?</h2>
       <input
         type="text"
-        id="username-input"
+        id="input-nome"
         placeholder="Digite seu nome..."
         maxlength="20"
         autocomplete="off"
       >
-      <button id="enter-btn">Entrar no chat</button>
+      <button id="btn-entrar">Entrar no chat</button>
     </div>
-
-    <!-- ==================== TELA DO CHAT ==================== -->
-    <!-- Esta tela fica escondida no início (classe "hidden").
-         Só aparece depois que o aluno digita o nome. -->
-    <div id="chat-screen" class="card hidden">
-
-      <div class="chat-header">
-        <span>Olá, <strong id="display-name"></strong>!</span>
-        <button id="logout-btn" class="btn-small">Sair</button>
+    <!-- ========== TELA 2: O chat (começa escondida) ========== -->
+    <div id="tela-chat" class="card escondido">
+      <!-- Nome do usuário + botão sair -->
+      <div class="cabecalho-chat">
+        <span>Olá, <strong id="nome-usuario"></strong>!</span>
+        <button id="btn-sair" class="btn-sair">Sair</button>
       </div>
-
-      <!-- Aqui as mensagens vão aparecer -->
-      <div id="messages" class="messages"></div>
-
-      <!-- Área de digitação -->
-      <div class="input-area">
+      <!-- Lista de mensagens -->
+      <div id="lista-mensagens" class="lista-mensagens"></div>
+      <!-- Campo para digitar + botão enviar -->
+      <div class="area-envio">
         <input
           type="text"
-          id="message-input"
+          id="input-mensagem"
           placeholder="Digite sua mensagem..."
           autocomplete="off"
         >
-        <button id="send-btn">Enviar</button>
+        <button id="btn-enviar">Enviar</button>
       </div>
-
     </div>
-
   </div>
-
-  <!-- Arquivo JavaScript que controla toda a lógica -->
+  <!-- Arquivo com a lógica do chat -->
   <script src="script.js"></script>
 </body>
 </html>

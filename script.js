@@ -1,197 +1,152 @@
-/* =========================================================
+/* =====================================================
    Chat Local - Mensagio Tecnologia
-   Arquivo JavaScript (lógica do chat)
-   =========================================================
+   Lógica do chat (JavaScript)
+   =====================================================
 
-   Este arquivo controla tudo o que acontece no chat:
-   - Entrar com o nome
-   - Enviar mensagens
-   - Mostrar as mensagens na tela
-   - Sair do chat
+   O que este arquivo faz:
+   1. Pega o nome do usuário
+   2. Mostra a tela do chat
+   3. Envia e exibe mensagens
+   4. Permite sair
 
    IMPORTANTE:
-   As mensagens ficam apenas na memória do navegador.
-   Quando você atualiza a página (F5), elas desaparecem.
-   Isso é uma limitação de um chat 100% local (sem servidor).
+   As mensagens ficam só na memória do navegador.
+   Se atualizar a página (F5), elas somem.
+   Isso acontece porque não existe servidor.
 */
 
-// ---------- 1. Pegando os elementos da página ----------
-// Aqui guardamos referências aos elementos HTML para poder manipulá-los depois.
+// ----- 1. Elementos da página -----
+const telaLogin = document.getElementById('tela-login');
+const telaChat = document.getElementById('tela-chat');
+const inputNome = document.getElementById('input-nome');
+const btnEntrar = document.getElementById('btn-entrar');
+const nomeUsuario = document.getElementById('nome-usuario');
+const btnSair = document.getElementById('btn-sair');
+const listaMensagens = document.getElementById('lista-mensagens');
+const inputMensagem = document.getElementById('input-mensagem');
+const btnEnviar = document.getElementById('btn-enviar');
 
-const loginScreen   = document.getElementById('login-screen');   // Tela de digitar o nome
-const chatScreen    = document.getElementById('chat-screen');    // Tela do chat
-const usernameInput = document.getElementById('username-input'); // Campo de nome
-const enterBtn      = document.getElementById('enter-btn');      // Botão "Entrar"
-const displayName   = document.getElementById('display-name');   // Onde mostra o nome do usuário
-const logoutBtn     = document.getElementById('logout-btn');     // Botão "Sair"
-const messagesDiv   = document.getElementById('messages');       // Área das mensagens
-const messageInput  = document.getElementById('message-input');  // Campo de digitação
-const sendBtn       = document.getElementById('send-btn');       // Botão "Enviar"
+// ----- 2. Dados do chat -----
+let usuarioAtual = null;
+let mensagens = [];
 
+// ----- 3. Funções auxiliares -----
 
-// ---------- 2. Estado da aplicação ----------
-// Variáveis que guardam informações enquanto o chat está aberto.
-
-let currentUser = null;  // Nome do usuário logado (começa vazio)
-let messages = [];       // Lista de todas as mensagens (array)
-
-
-// ---------- 3. Funções auxiliares ----------
-
-/**
- * Formata a hora atual no padrão brasileiro (ex: 14:35)
- */
-function formatTime(date) {
-  return date.toLocaleTimeString('pt-BR', {
+// Formata a hora (ex: 14:35)
+function formatarHora(data) {
+  return data.toLocaleTimeString('pt-BR', {
     hour: '2-digit',
     minute: '2-digit'
   });
 }
 
-/**
- * Proteção simples contra XSS.
- * Transforma caracteres especiais em texto seguro.
- * Exemplo: <script> vira texto normal em vez de código.
- */
-function escapeHtml(text) {
+// Evita que alguém digite código HTML perigoso
+function protegerTexto(texto) {
   const div = document.createElement('div');
-  div.textContent = text;
+  div.textContent = texto;
   return div.innerHTML;
 }
 
-/**
- * Adiciona uma nova mensagem na lista e atualiza a tela.
- * @param {string} text  - Texto da mensagem
- * @param {boolean} isOwn - true = mensagem sua | false = mensagem de outro
- */
-function addMessage(text, isOwn = true) {
+// Adiciona uma mensagem na lista e atualiza a tela
+function adicionarMensagem(texto, ehMinha) {
   const msg = {
-    id: Date.now(),          // ID único baseado no horário
-    user: currentUser,       // Quem enviou
-    text: text,              // Conteúdo
-    time: new Date(),        // Horário
-    own: isOwn               // Se é mensagem do usuário atual
+    usuario: usuarioAtual,
+    texto: texto,
+    hora: new Date(),
+    minha: ehMinha
   };
 
-  messages.push(msg);        // Adiciona no array
-  renderMessages();          // Atualiza a tela
+  mensagens.push(msg);
+  mostrarMensagens();
 }
 
-/**
- * Desenha todas as mensagens na tela.
- * Essa função é chamada sempre que uma nova mensagem é adicionada.
- */
-function renderMessages() {
-  // Limpa a área de mensagens
-  messagesDiv.innerHTML = '';
+// Desenha todas as mensagens na tela
+function mostrarMensagens() {
+  listaMensagens.innerHTML = '';
 
-  // Percorre todas as mensagens e cria o HTML de cada uma
-  messages.forEach(msg => {
+  mensagens.forEach(function (msg) {
     const div = document.createElement('div');
 
-    // Define a classe CSS (own = direita azul | other = esquerda cinza)
-    div.className = `message ${msg.own ? 'own' : 'other'}`;
+    // Define se a mensagem é "minha" ou "outra"
+    div.className = 'mensagem ' + (msg.minha ? 'minha' : 'outra');
 
-    // Monta o conteúdo da mensagem
-    div.innerHTML = `
-      <div class="meta">${msg.user} • ${formatTime(msg.time)}</div>
-      <div>${escapeHtml(msg.text)}</div>
-    `;
+    div.innerHTML =
+      '<div class="info">' + msg.usuario + ' • ' + formatarHora(msg.hora) + '</div>' +
+      '<div>' + protegerTexto(msg.texto) + '</div>';
 
-    messagesDiv.appendChild(div);
+    listaMensagens.appendChild(div);
   });
 
-  // Rola automaticamente para a última mensagem
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  // Rola para a última mensagem
+  listaMensagens.scrollTop = listaMensagens.scrollHeight;
 }
 
+// ----- 4. Eventos (o que acontece quando o usuário clica ou aperta Enter) -----
 
-// ---------- 4. Eventos (o que acontece quando o usuário interage) ----------
+// Clicou em "Entrar no chat"
+btnEntrar.addEventListener('click', function () {
+  const nome = inputNome.value.trim();
 
-/**
- * Quando o aluno clica em "Entrar no chat"
- */
-enterBtn.addEventListener('click', () => {
-  const name = usernameInput.value.trim(); // Remove espaços extras
-
-  // Validação simples
-  if (name.length < 2) {
+  if (nome.length < 2) {
     alert('Digite um nome com pelo menos 2 caracteres');
     return;
   }
 
-  // Guarda o nome do usuário
-  currentUser = name;
-  displayName.textContent = currentUser;
+  usuarioAtual = nome;
+  nomeUsuario.textContent = usuarioAtual;
 
-  // Esconde a tela de login e mostra a tela do chat
-  loginScreen.classList.add('hidden');
-  chatScreen.classList.remove('hidden');
+  // Esconde login e mostra o chat
+  telaLogin.classList.add('escondido');
+  telaChat.classList.remove('escondido');
 
-  // Coloca o foco no campo de mensagem
-  messageInput.focus();
+  inputMensagem.focus();
 
-  // Mensagem de boas-vindas (simulada como se fosse de "outro")
-  setTimeout(() => {
-    addMessage(`Bem-vindo(a) ao Chat Local, ${currentUser}! 👋`, false);
+  // Mensagem de boas-vindas (aparece como se fosse de outro)
+  setTimeout(function () {
+    adicionarMensagem('Bem-vindo(a) ao Chat Local, ' + usuarioAtual + '!', false);
   }, 300);
 });
 
-/**
- * Permite pressionar Enter no campo de nome para entrar
- */
-usernameInput.addEventListener('keypress', (e) => {
+// Apertou Enter no campo de nome
+inputNome.addEventListener('keypress', function (e) {
   if (e.key === 'Enter') {
-    enterBtn.click();
+    btnEntrar.click();
   }
 });
 
-/**
- * Função que envia a mensagem
- */
-function sendMessage() {
-  const text = messageInput.value.trim();
+// Função que envia a mensagem
+function enviarMensagem() {
+  const texto = inputMensagem.value.trim();
 
-  // Não envia se estiver vazio
-  if (!text) return;
+  if (!texto) return;   // não envia se estiver vazio
 
-  // Adiciona a mensagem como "própria" (azul, direita)
-  addMessage(text, true);
+  adicionarMensagem(texto, true);   // true = mensagem minha
 
-  // Limpa o campo e devolve o foco
-  messageInput.value = '';
-  messageInput.focus();
+  inputMensagem.value = '';
+  inputMensagem.focus();
 }
 
-/**
- * Clique no botão Enviar
- */
-sendBtn.addEventListener('click', sendMessage);
+// Clicou em "Enviar"
+btnEnviar.addEventListener('click', enviarMensagem);
 
-/**
- * Pressionar Enter no campo de mensagem também envia
- */
-messageInput.addEventListener('keypress', (e) => {
+// Apertou Enter no campo de mensagem
+inputMensagem.addEventListener('keypress', function (e) {
   if (e.key === 'Enter') {
-    sendMessage();
+    enviarMensagem();
   }
 });
 
-/**
- * Botão Sair - volta para a tela de login e limpa tudo
- */
-logoutBtn.addEventListener('click', () => {
-  currentUser = null;
-  messages = [];
-  messagesDiv.innerHTML = '';
-  usernameInput.value = '';
+// Clicou em "Sair"
+btnSair.addEventListener('click', function () {
+  usuarioAtual = null;
+  mensagens = [];
+  listaMensagens.innerHTML = '';
+  inputNome.value = '';
 
-  chatScreen.classList.add('hidden');
-  loginScreen.classList.remove('hidden');
-  usernameInput.focus();
+  telaChat.classList.add('escondido');
+  telaLogin.classList.remove('escondido');
+  inputNome.focus();
 });
 
-
-// ---------- 5. Inicialização ----------
-// Quando a página carrega, o foco já fica no campo de nome.
-usernameInput.focus();
+// ----- 5. Ao carregar a página -----
+inputNome.focus();   // já deixa o cursor no campo de nome

@@ -1,20 +1,19 @@
-/* =========================================================
+/* =====================================================
    Chat Local - Mensagio Tecnologia
    Arquivo de estilos (CSS)
-   ========================================================= */
+   ===================================================== */
 
-/* Reset básico - remove margens e paddings padrão do navegador */
+/* Remove margens padrão e usa box-sizing mais previsível */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Estilo geral da página */
+/* Fundo escuro e centralização da página */
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
-  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+  font-family: system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #1e3a5f, #0f172a);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -23,21 +22,20 @@ body {
   padding: 16px;
 }
 
-/* Container principal (centraliza o conteúdo) */
+/* Largura máxima do conteúdo */
 .container {
   width: 100%;
-  max-width: 480px;
+  max-width: 460px;
 }
 
-/* Cabeçalho */
+/* Título */
 header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 header h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 1.7rem;
   color: #38bdf8;
 }
 
@@ -47,31 +45,31 @@ header h1 {
   margin-top: 4px;
 }
 
-/* Card (caixa principal) */
+/* Caixa principal (card) */
 .card {
   background: #1e293b;
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   border: 1px solid #334155;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
-/* Classe utilitária para esconder elementos */
-.hidden {
+/* Classe para esconder elementos */
+.escondido {
   display: none !important;
 }
 
-/* ========== Tela de Login ========== */
+/* ----- Tela de login ----- */
 
-#login-screen h2 {
-  font-size: 1.2rem;
-  margin-bottom: 16px;
+#tela-login h2 {
+  font-size: 1.15rem;
   text-align: center;
+  margin-bottom: 16px;
 }
 
-#username-input {
+#input-nome {
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 14px;
   border: 1px solid #475569;
   border-radius: 10px;
   background: #0f172a;
@@ -79,14 +77,13 @@ header h1 {
   font-size: 1rem;
   margin-bottom: 12px;
   outline: none;
-  transition: border-color 0.2s;
 }
 
-#username-input:focus {
+#input-nome:focus {
   border-color: #38bdf8;
 }
 
-/* Botões */
+/* Botão principal */
 button {
   width: 100%;
   padding: 12px;
@@ -97,53 +94,47 @@ button {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
 button:hover {
   background: #0284c7;
 }
 
-button:active {
-  transform: scale(0.98);
+/* ----- Tela do chat ----- */
+
+.cabecalho-chat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #334155;
 }
 
-/* Botão pequeno (Sair) */
-.btn-small {
+/* Botão sair (menor e cinza) */
+.btn-sair {
   width: auto;
   padding: 6px 12px;
   font-size: 0.85rem;
   background: #475569;
 }
 
-.btn-small:hover {
+.btn-sair:hover {
   background: #64748b;
 }
 
-/* ========== Tela do Chat ========== */
-
-.chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #334155;
-}
-
 /* Área onde as mensagens aparecem */
-.messages {
-  height: 360px;
+.lista-mensagens {
+  height: 340px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 16px;
-  padding-right: 4px;
+  margin-bottom: 14px;
 }
 
-/* Estilo de cada mensagem */
-.message {
+/* Cada mensagem */
+.mensagem {
   max-width: 85%;
   padding: 10px 14px;
   border-radius: 12px;
@@ -152,40 +143,39 @@ button:active {
 }
 
 /* Mensagem enviada por você (direita, azul) */
-.message.own {
+.mensagem.minha {
   align-self: flex-end;
   background: #0ea5e9;
-  color: white;
   border-bottom-right-radius: 4px;
 }
 
-/* Mensagem de "outra pessoa" (esquerda, cinza) */
-.message.other {
+/* Mensagem de outro (esquerda, cinza) */
+.mensagem.outra {
   align-self: flex-start;
   background: #334155;
   border-bottom-left-radius: 4px;
 }
 
 /* Nome + horário em cima da mensagem */
-.message .meta {
+.mensagem .info {
   font-size: 0.75rem;
   opacity: 0.8;
   margin-bottom: 2px;
 }
 
-.message.own .meta {
+.mensagem.minha .info {
   text-align: right;
 }
 
-/* Área de digitação + botão enviar */
-.input-area {
+/* Campo de digitação + botão enviar */
+.area-envio {
   display: flex;
   gap: 8px;
 }
 
-#message-input {
+#input-mensagem {
   flex: 1;
-  padding: 12px 16px;
+  padding: 12px 14px;
   border: 1px solid #475569;
   border-radius: 10px;
   background: #0f172a;
@@ -194,25 +184,11 @@ button:active {
   outline: none;
 }
 
-#message-input:focus {
+#input-mensagem:focus {
   border-color: #38bdf8;
 }
 
-#send-btn {
+#btn-enviar {
   width: auto;
-  padding: 12px 20px;
-}
-
-/* Scrollbar personalizada (fica mais bonita) */
-.messages::-webkit-scrollbar {
-  width: 6px;
-}
-
-.messages::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.messages::-webkit-scrollbar-thumb {
-  background: #475569;
-  border-radius: 3px;
+  padding: 12px 18px;
 }
